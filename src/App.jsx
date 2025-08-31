@@ -36,28 +36,26 @@ function App() {
 
   function shuffle(array) {
     let currentIndex = array.length
-    let randomIndex
-
+    let randomIndex;
     while (currentIndex !== 0) {
-      randomIndex = Math.floor(Math.random() * currentIndex)
-      currentIndex--
-      [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]]
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+      [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
     }
-
-    return array
+    return array;
   }
 
   function handleAnswerClick(option) {
     if (selectedAnswer) return // Prevent re-selecting after answer is chosen
-    
+
     setSelectedAnswer(option)
     const correct = option === quiz[index].correctAnswer
     setIsCorrect(correct)
-    
+
     if (correct) {
       setScore(score + 1)
     }
-    
+
     // Move to next question after a delay
     setTimeout(() => {
       if (index < quiz.length - 1) {
@@ -104,6 +102,7 @@ function App() {
   const currentQuestion = quiz[index]
   const progress = ((index + 1) / quiz.length) * 100
 
+
   return (
     <div className="app">
       <div className="quiz-container">
@@ -130,16 +129,16 @@ function App() {
         <div className="answer-section">
           {shuffledOptions.map((option, i) => {
             let buttonClass = "answer-button"
-            
+
             if (selectedAnswer === option) {
               buttonClass += isCorrect ? " correct" : " incorrect"
             } else if (selectedAnswer && option === currentQuestion.correctAnswer) {
               buttonClass += " correct"
             }
-            
+
             return (
-              <button 
-                key={i} 
+              <button
+                key={i}
                 onClick={() => handleAnswerClick(option)}
                 className={buttonClass}
                 disabled={selectedAnswer !== null}
@@ -153,8 +152,8 @@ function App() {
         <div className="feedback">
           {isCorrect !== null && (
             <p className={isCorrect ? "correct-feedback" : "incorrect-feedback"}>
-              {isCorrect 
-                ? "Correct! Well done!" 
+              {isCorrect
+                ? "Correct! Well done!"
                 : `Sorry, the correct answer is: ${currentQuestion.correctAnswer}`
               }
             </p>
